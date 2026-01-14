@@ -1,4 +1,5 @@
 // stats.cpp
+#include <iostream>
 #include "stats.hpp"
 #include <cassert>
 #include <vector>
@@ -86,8 +87,17 @@ double stdev(vector<double> v)
 
 double percentile(vector<double> v, double p) 
 {
-  assert(false);
-  return 0.0;
+    //calculated the rank
+  double rankNum = (p * (count(v) - 1)) + 1;
+  cout << rankNum << endl;
+  
+  //splits the rank into integer k and decimal d
+  int k = rankNum;
+  double d = rankNum - k;
+  cout << k << endl;
+  cout << d << endl;
+
+  return v[k - 1] + (d * (v[k] - v[k - 1]));
 }
 
 vector<double> filter(vector<double> v,
