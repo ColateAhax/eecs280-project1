@@ -89,22 +89,27 @@ double percentile(vector<double> v, double p)
 {
     //calculated the rank
   double rankNum = (p * (count(v) - 1)) + 1;
-  cout << rankNum << endl;
   
   //splits the rank into integer k and decimal d
   int k = rankNum;
   double d = rankNum - k;
-  cout << k << endl;
-  cout << d << endl;
 
+  //modifies the original percentile function for an index that starts with 0
   return v[k - 1] + (d * (v[k] - v[k - 1]));
 }
 
 vector<double> filter(vector<double> v,
                       vector<double> criteria,
-                      double target) {
-  assert(false);
+                      double target) 
+{
+//creates the empty vector
+  vector<double> filteredVector;
 
-  std::vector<double> emptyObject;
-  return emptyObject;
+  //the loop goes through the criteria and when it matches the target
+  //it adds the respective index to the new vector
+  for(size_t i = 0; i < criteria.size(); i++)
+  {
+    if (target == criteria[i]) filteredVector.push_back(v[i]);
+  }
+  return filteredVector;
 }
