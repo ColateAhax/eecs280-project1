@@ -69,8 +69,19 @@ double max(vector<double> v)
 
 double stdev(vector<double> v) 
 {
-  assert(false);
-  return 0.0;
+    //completes the sum
+  double sum = 0.0;
+  for (size_t i = 0; i < v.size(); i++)
+  {
+    sum += (v[i] - mean(v)) * (v[i] - mean(v));
+  }
+
+  //calculates the number infront of the sum
+  double val = 1.0;
+  val = val / (count(v) - 1);
+
+  //returns final stdev
+  return sqrt(val * sum);
 }
 
 double percentile(vector<double> v, double p) 
