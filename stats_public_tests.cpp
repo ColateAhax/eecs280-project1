@@ -16,10 +16,13 @@ static bool almost_equal(double x, double y) {
 }
 
 int main() {
+  cout << "running" << endl;
+
   vector<double> data;
   data.push_back(1);
   data.push_back(2);
   data.push_back(3);
+  
   assert(count(data) == 3);
   assert(sum(data) == 6);
   assert(almost_equal(mean(data), 2));

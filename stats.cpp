@@ -8,23 +8,24 @@
 using namespace std;
 
 int count(vector<double> v) {
-  assert(false);
-  return 0;
+  int count = 0;
+  for (size_t i = 0; i < v.size(); i++) count++;
+  return count;
 }
 
 double sum(vector<double> v) {
-  assert(false);
-  return 0.0;
+  double total = 0.0;
+  for (size_t i = 0; i < v.size(); i++) total += v[i];
+  return total;
 }
 
 double mean(vector<double> v) {
-  assert(false);
-  return 0.0;
+  return sum(v)/count(v);
 }
 
 double median(vector<double> v) {
-  assert(false);
-  return 0.0;
+  if (count(v) % 2 != 0) return v[count(v) / 2];
+  return (v[count(v) / 2] + v[(count(v) / 2) + 1]) / 2;
 }
 
 double min(vector<double> v) {
