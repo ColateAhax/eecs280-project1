@@ -87,7 +87,13 @@ double stdev(vector<double> v)
 
 double percentile(vector<double> v, double p) 
 {
-    //calculated the rank
+  //SPECIAL CASES
+  //if percentile is 1
+  if (p == 1.0 || fabs(1.0 - p) < 0.00001) return v[v.size() - 1];
+  //if percentile is 0
+  if (p == 0.0 || fabs(0.0 - p) < 0.00001) return v[0];
+
+  //calculated the rank
   double rankNum = (p * (count(v) - 1)) + 1;
   
   //splits the rank into integer k and decimal d
