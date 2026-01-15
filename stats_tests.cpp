@@ -30,6 +30,7 @@ static bool almost_equal(double x, double y) {
 
 void test_sum_small_data_set();
 void testing(vector<double> data, vector<double> correct, double p);
+void testing_filter(vector<double> data, vector<double> criteria, vector<double> correct, double target);
 
 // Add prototypes for you test functions here.
 
@@ -55,10 +56,15 @@ void test_sum_small_data_set() {
   //stdev 3.74046937043
   //Percentile (.5); rank = 5.5; ==> 4.5
 
+  vector<double> criteria_1 =
+                          {1, 0, 0, 1  , 1, 3, 2,   2,  1,  1};
   vector<double> data_1 = {1, 1, 2, 3.4, 4, 5, 6, 7.6, 10, 12};
+  vector<double> correct_filter_1 = {1, 3.4, 4, 10, 12};
+  double target_1 = 1;
   double p_1 = .5;
   vector<double> correct_data_1 = {10, 52, 5.2, 4.5, 12, 1, 3.74046937043, 4.5};
   testing(data_1, correct_data_1, p_1);
+  testing_filter(data_1, criteria_1, correct_filter_1, target_1);
 
 
   //TESTING 2
@@ -73,10 +79,19 @@ void test_sum_small_data_set() {
   //stdev 3.76114217708
   //Percentile (1.0); Should return last number ==> 12.9
 
+  vector<double> criteria_2 =
+                          {.4, .3,.3,.3,.4, .5, .3};
   vector<double> data_2 = {2, 3.1, 6, 7, 7, 10, 12.9};
+  vector<double> correct_filter_2 = {3.1, 6, 7, 12.9};
+  double target_2 = .3;
   double p_2 = 1.0;
   vector<double> correct_data_2 = {7, 48, 6.85714285714, 7, 12.9, 2, 3.76114217708, 12.9};
   testing(data_2, correct_data_2, p_2);
+  testing_filter(data_2, criteria_2, correct_filter_2, target_2);
+
+  //if percentile is 0.0; Should return first number ==> 2
+  vector<double> correct_data_3 = {7, 48, 6.85714285714, 7, 12.9, 2, 3.76114217708, 2};
+  testing(data_2, correct_data_3, 0.0);
 
   cout << "PASS!" << endl;
 }
@@ -100,5 +115,16 @@ void testing(vector<double> data, vector<double> correct, double p)
 
   assert(almost_equal(percentile(data, p), correct[7]));
 
-  cout << "Passed Testing" << endl;
+  cout << "Passed Round of Testing" << endl;
+}
+
+void testing_filter(vector<double> data, vector<double> criteria, vector<double> correct, double target)
+{
+  vector<double> potential = filter(data, criteria, target);
+  assert(potential.size() == correct.size());
+  for(size_t i = 0; i < correct.size(); i++)
+  {
+    assert(almost_equal(correct[i], potential[i]));
+  }
+  cout << "Passed Filter Testing" << endl;
 }

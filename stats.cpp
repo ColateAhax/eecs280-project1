@@ -8,6 +8,12 @@
 
 using namespace std;
 
+const double epsilon = 0.00001;
+
+static bool almost_equal(double x, double y) {
+  return abs(x - y) < epsilon;
+}
+
 int count(vector<double> v) 
 {
   int count = 0;
@@ -115,7 +121,7 @@ vector<double> filter(vector<double> v,
   //it adds the respective index to the new vector
   for(size_t i = 0; i < criteria.size(); i++)
   {
-    if (target == criteria[i]) filteredVector.push_back(v[i]);
+    if (almost_equal(target, criteria[i])) filteredVector.push_back(v[i]);
   }
   return filteredVector;
 }
