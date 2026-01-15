@@ -33,7 +33,7 @@ double median(vector<double> v)
   if (count(v) % 2 != 0) return v[count(v) / 2];
 
   //otherwise it averages the other 2 numbers closest to the middle
-  return (v[count(v) / 2] + v[(count(v) / 2) + 1]) / 2;
+  return (v[count(v) / 2] + v[(count(v) / 2) - 1]) / 2;
 }
 
 double min(vector<double> v) 
