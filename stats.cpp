@@ -10,15 +10,17 @@ using namespace std;
 
 const double epsilon = 0.00001;
 
-static bool almost_equal(double x, double y) {
+static bool almost_equal(double x, double y) 
+{
   return abs(x - y) < epsilon;
 }
 
 int count(vector<double> v) 
 {
-  int count = 0;
-  for (size_t i = 0; i < v.size(); i++) count++;
-  return count;
+  // int count = 0;
+  // for (size_t i = 0; i < v.size(); i++) count++;
+  // return count;
+  return v.size();
 }
 
 double sum(vector<double> v) 
