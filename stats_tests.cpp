@@ -23,6 +23,8 @@ using namespace std;
 
 void test_sum_small_data_set();
 
+void compare(vector<double> v, vector<double> b);
+
 void test_count();
 void test_sum();
 void test_mean();
@@ -30,7 +32,6 @@ void test_median();
 void test_min();
 void test_max();
 void test_stdev();
-void test_mean();
 void test_percentile();
 void test_filter();
 
@@ -39,7 +40,8 @@ void test_filter();
 // Precision for floating point comparison
 const double epsilon = 0.00001;
 
-static bool almost_equal(double x, double y) {
+static bool almost_equal(double x, double y) 
+{
   return abs(x - y) < epsilon;
 }
 
@@ -53,6 +55,8 @@ int main() {
   test_min();
   test_max();
   test_stdev();
+  test_percentile();
+  test_filter();
   return 0;
 }
 
@@ -204,4 +208,62 @@ void test_stdev()
   assert(almost_equal(stdev(v_3), 20.6228029133));
 
   cout << "Passed Stdev Testing" << endl;
+}
+
+void test_percentile()
+{
+  //checks for normal vector
+  //should be 3.5
+  vector<double> v_1 = {1, 2, 3, 4, 5, 6};
+
+  //checks for previous vector out of order
+  vector<double> v_2 = {4, 1, 6, 3, 2, 5};
+
+  //checks for data set with doubles
+  //should be 1.1275
+  vector<double> v_3 = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6};
+
+  assert(almost_equal(percentile(v_1, .5), 3.5));
+  assert(almost_equal(percentile(v_2, .5), 3.5));
+  assert(almost_equal(percentile(v_3, .5), 3.85));
+  
+  //chekcs for when p = 1
+  assert(almost_equal(percentile(v_1, 1), 6));
+
+   //chekcs for when p = 0
+  assert(almost_equal(percentile(v_1, 0), 1));
+
+  cout << "Passed Percentile Testing" << endl;
+}
+
+void test_filter()
+{
+  //using the example given in the proj description
+  vector<double> locations = {0, 1, 0, 1, 1, 2, 2, 0, 1};
+  vector<double> temps = {15.5, 23.1, 7.8, 19.2, 22.6, 4.6, 1.9, 14.3, 18.0};
+  // Filter to the temperature measurements at location 1
+  vector<double> temps_1 = filter(temps, locations, 1);
+  vector<double> correct_temps_1 = {23.1, 19.2, 22.6, 18.0};
+  compare(temps_1, correct_temps_1);
+
+  //when doubles are in the location
+  vector<double> locations_2 = {0, 1.1, 0, 1.1, 1.1, 2.2, 2.2, 0, 1.1};
+  vector<double> temps_2 = filter(temps, locations_2, 1.1);
+  compare(temps_2, correct_temps_1);
+
+  //when there are no mathces
+  vector<double> temps_3 = filter(temps, locations, 100);
+  compare(temps_3, {});
+
+  cout << "Passed Filter Testing" << endl;
+}
+
+//compares that 2 arrays are identical
+void compare(vector<double> v, vector<double> b)
+{
+  assert(v.size() == b.size());
+  for (size_t i = 0; i < v.size(); i++)
+  {
+    assert(almost_equal(v[i], b[i]));
+  }
 }
