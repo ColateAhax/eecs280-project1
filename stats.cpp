@@ -15,6 +15,19 @@ static bool almost_equal(double x, double y)
   return abs(x - y) < epsilon;
 }
 
+bool isAscending(vector<double> v)
+{
+  for(size_t i = 1; i < v.size(); i++)
+  {
+    //checks if the index before is greater than the current index
+    //if that is the case then the data set is not ascending (sorted)
+    if (v[i - 1] > v[i]) return false;
+    return true;
+  }
+
+  return true;
+}
+
 int count(vector<double> v) 
 {
   // int count = 0;
@@ -37,6 +50,9 @@ double mean(vector<double> v)
 
 double median(vector<double> v) 
 {
+  //checks that vector is sorted
+  if (!isAscending(v)) sort(v.begin(), v.end());
+  
     //checks if its odd, if so it grabs the "middle number"
   if (count(v) % 2 != 0) return v[count(v) / 2];
 
@@ -95,6 +111,7 @@ double stdev(vector<double> v)
 
 double percentile(vector<double> v, double p) 
 {
+  if (!isAscending(v)) sort(v.begin(), v.end());
   //SPECIAL CASES
   //if percentile is 1
   if (p == 1.0 || fabs(1.0 - p) < 0.00001) return v[v.size() - 1];

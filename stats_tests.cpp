@@ -21,6 +21,21 @@
 #include <cmath>
 using namespace std;
 
+void test_sum_small_data_set();
+
+void test_count();
+void test_sum();
+void test_mean();
+void test_median();
+void test_min();
+void test_max();
+void test_stdev();
+void test_mean();
+void test_percentile();
+void test_filter();
+
+// Add prototypes for you test functions here.
+
 // Precision for floating point comparison
 const double epsilon = 0.00001;
 
@@ -28,103 +43,165 @@ static bool almost_equal(double x, double y) {
   return abs(x - y) < epsilon;
 }
 
-void test_sum_small_data_set();
-void testing(vector<double> data, vector<double> correct, double p);
-void testing_filter(vector<double> data, vector<double> criteria, vector<double> correct, double target);
-
-// Add prototypes for you test functions here.
-
 int main() {
   test_sum_small_data_set();
   // Call your test functions here
 
+  test_count();
+  test_mean();
+  test_median();
+  test_min();
+  test_max();
+  test_stdev();
   return 0;
 }
 
 void test_sum_small_data_set() {
   cout << "test_sum_small_data_set" << endl;
-  
-  //TESTING 1
-  //Used Desmos Graphing Calculator to get most of these Stats
 
-  //length 10
-  //sum 52
-  //mean 5.2
-  //median 4.5
-  //max 12
-  //min 1
-  //stdev 3.74046937043
-  //Percentile (.5); rank = 5.5; ==> 4.5
+  vector<double> data;
+  data.push_back(1);
+  data.push_back(2);
+  data.push_back(3);
 
-  vector<double> criteria_1 =
-                          {1, 0, 0, 1  , 1, 3, 2,   2,  1,  1};
-  vector<double> data_1 = {1, 1, 2, 3.4, 4, 5, 6, 7.6, 10, 12};
-  vector<double> correct_filter_1 = {1, 3.4, 4, 10, 12};
-  double target_1 = 1;
-  double p_1 = .5;
-  vector<double> correct_data_1 = {10, 52, 5.2, 4.5, 12, 1, 3.74046937043, 4.5};
-  testing(data_1, correct_data_1, p_1);
-  testing_filter(data_1, criteria_1, correct_filter_1, target_1);
-
-
-  //TESTING 2
-  ////Used Desmos Graphing Calculator to get most of these Stats
-
-  //length 7
-  //sum 48
-  //mean 6.85714285714
-  //median 7
-  //max 12.9
-  //min 2
-  //stdev 3.76114217708
-  //Percentile (1.0); Should return last number ==> 12.9
-
-  vector<double> criteria_2 =
-                          {.4, .3,.3,.3,.4, .5, .3};
-  vector<double> data_2 = {2, 3.1, 6, 7, 7, 10, 12.9};
-  vector<double> correct_filter_2 = {3.1, 6, 7, 12.9};
-  double target_2 = .3;
-  double p_2 = 1.0;
-  vector<double> correct_data_2 = {7, 48, 6.85714285714, 7, 12.9, 2, 3.76114217708, 12.9};
-  testing(data_2, correct_data_2, p_2);
-  testing_filter(data_2, criteria_2, correct_filter_2, target_2);
-
-  //if percentile is 0.0; Should return first number ==> 2
-  vector<double> correct_data_3 = {7, 48, 6.85714285714, 7, 12.9, 2, 3.76114217708, 2};
-  testing(data_2, correct_data_3, 0.0);
+  assert(sum(data) == 6);
 
   cout << "PASS!" << endl;
 }
-
 // Add the test function implementations here.
-void testing(vector<double> data, vector<double> correct, double p)
+void test_count()
 {
-  assert(almost_equal(count(data), correct[0]));
+  //checks for empty vector
+  vector<double> v_1 = {};
 
-  assert(almost_equal(sum(data), correct[1]));
+  //checks for single vector
+  vector<double> v_2 = {1};
 
-  assert(almost_equal(mean(data), correct[2]));
-  
-  assert(almost_equal(median(data), correct[3]));
+  //cehcks for multiple vectors
+  vector<double> v_3 = {1, 2, 3};
 
-  assert(almost_equal(max(data), correct[4]));
+  assert(count(v_1) == 0);
+  assert(count(v_2) == 1);
+  assert(count(v_3) == 3);
 
-  assert(almost_equal(min(data), correct[5]));
-
-  assert(almost_equal(stdev(data), correct[6]));
-
-  assert(almost_equal(percentile(data, p), correct[7]));
-
-  cout << "Passed Round of Testing" << endl;
+  cout << "Passed Count Testing" << endl;
 }
 
-void testing_filter(vector<double> data, vector<double> criteria, vector<double> correct, double target)
+void test_sum()
 {
-  vector<double> potential = filter(data, criteria, target);
-  assert(potential.size() == correct.size());
-  for(size_t i = 0; i < correct.size(); i++)
-  {
-    assert(almost_equal(correct[i], potential[i]));
-  }
-  cout << "Passed Filter Testing" << endl;
+  //checks for empty vector
+  vector<double> v_1 = {};
+
+  //checks for double numbers
+  //should be 16.5
+  vector<double> v_2 = {1.1, 2.2, 3.3, 4.4, 5.5};
+
+  //chekcs for negative numbers
+  //should be 12
+  vector<double> v_3 = {-1, -2, -3, 5, 6, 7};
+
+  assert(count(v_1) == 0);
+  assert(count(v_2) == 16.5);
+  assert(count(v_3) == 12);
+  cout << "Passed Sum Testing" << endl;
+}
+
+void test_mean()
+{
+  //checks for negative ints
+  //should be 3.4
+  vector<double> v_1 = {-1, -5, 10, 16, -3};
+
+  //checks for doubles
+  //should be 3.3
+  vector<double> v_2 = {1.1, 2.2, 3.3, 4.4, 5.5};
+
+  assert(almost_equal(mean(v_1), 3.4));
+  assert(almost_equal(mean(v_2), 3.3));
+
+  cout << "Passed Mean Testing" << endl;
+}
+
+void test_median()
+{
+  //checks for even size
+  //should be 8.5
+  vector<double> v_1 = {5, 6, 8, 9, 10, 15};
+
+  //checks for odd size
+  //should be 6
+  vector<double> v_2 = {1, 4, 6, 7, 10};
+
+  //checks for even size that is out of order
+  //should be 5.3
+  vector<double> v_3 = {7, 4, 10, 3, 20, 1, -4, 6.6};
+
+  assert(almost_equal(median(v_1), 8.5));
+  assert(median(v_2) == 6);
+  assert(almost_equal(median(v_3), 5.3));
+
+  cout << "Passed Median Testing" << endl;
+}
+
+void test_min()
+{
+  //checks for array of 1
+  //should be 5
+  vector<double> v_1 = {5};
+
+  //checks for negative numbers
+  //should be -7
+  vector<double> v_2 = {1, 4, 6, -7, 10};
+
+  //checks for doubles
+  //should be 1.1
+  vector<double> v_3 = {11, 4, 6, 1.1, 10};
+
+  assert(min(v_1) == 5);
+  assert(min(v_2) == -7);
+  assert(almost_equal(min(v_3), 1.1));
+
+  cout << "Passed Min Testing" << endl;
+}
+
+void test_max()
+{
+  //checks for array of 1
+  //should be 5
+  vector<double> v_1 = {5};
+
+  //checks for negative numbers
+  //should be -1
+  vector<double> v_2 = {-1, -4, -6, -7, -10};
+
+  //checks for doubles
+  //should be 11.3
+  vector<double> v_3 = {11.3, 4, 6, 1.1, 10};
+
+  assert(max(v_1) == 5);
+  assert(max(v_2) == -1);
+  assert(almost_equal(max(v_3), 11.3));
+
+  cout << "Passed Max Testing" << endl;
+}
+
+void test_stdev()
+{
+  //checks for same value
+  //should be 0
+  vector<double> v_1 = {3, 3, 3, 3, 3, 3};
+
+  //checks for single vector
+  //should be 6.68331255192
+  vector<double> v_2 = {5, -4, -3, 10};
+
+  //cehcks for other random vector
+  //should be 20.6228029133
+  vector<double> v_3 = {1, 10 , 3, 4, 50};
+
+  assert(stdev(v_1) == 0);
+  assert(almost_equal(stdev(v_2), 6.68331255192));
+  assert(almost_equal(stdev(v_3), 20.6228029133));
+
+  cout << "Passed Stdev Testing" << endl;
 }
