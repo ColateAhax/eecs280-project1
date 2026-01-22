@@ -79,8 +79,9 @@ pair<double, double> confidence_interval(vector<double> v, double width) {
 
   // HINT: You can return a pair like this:
   //   return {lower, upper};
-  
-  assert(false);
+  double lower = .5 - (width / 2);
+  double upper = .5 + (width / 2);
+  return {percentile(v, lower), percentile(v, upper)};
 }
 
 void two_sample_analysis(string file_name, string filter_column_name,
