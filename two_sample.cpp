@@ -43,7 +43,8 @@ void print_descriptive_stats(vector<double> data) {
 //          vector of the computed difference in means for 1000 bootstrap
 //          resamples of original samples data_A and data_B.
 vector<double> mean_diff_sampling_distribution(
-  vector<double> data_A, vector<double> data_B) {
+  vector<double> data_A, vector<double> data_B) 
+  {
   // TODO: Implement this function, removing the assert(false); placeholder.
 
   // HINT: Repeat the following 1000 times:
@@ -52,8 +53,16 @@ vector<double> mean_diff_sampling_distribution(
   //      Make sure to pass in the iteration number as the sample_num.
   //   2. Compute the difference in means between the resamples
   //   3. Add the computed value to a vector
-  
-  assert(false);
+  vector<double> results;
+  for (int i = 0; i < 1000; i++)
+  {
+    //resampling the data
+    vector <double> a_resampled = bootstrap_resample(data_A, i);
+    vector <double> b_resampled = bootstrap_resample(data_B, i);
+    //calculates the difference in means and adds it to a vector
+    results.push_back(mean(a_resampled)-mean(b_resampled));
+  }
+  return results;
 }
 
 //REQUIRES: v is not empty
