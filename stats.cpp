@@ -22,7 +22,6 @@ bool isAscending(vector<double> v)
     //checks if the index before is greater than the current index
     //if that is the case then the data set is not ascending (sorted)
     if (v[i - 1] > v[i]) return false;
-    return true;
   }
 
   return true;

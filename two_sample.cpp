@@ -23,7 +23,18 @@ using namespace std;
 //EFFECTS: Prints descriptive statistics for the given data
 void print_descriptive_stats(vector<double> data) {
   // TODO: Implement this function, removing the assert(false); placeholder.
-  assert(false);
+  cout << "count = " << count(data) << endl;
+  cout << "sum = " << sum(data) << endl;
+  cout << "mean = " << mean(data) << endl;
+  cout << "stdev = " << stdev(data) << endl;
+  cout << "median = " << median(data) << endl;
+  cout << "min = " << min(data) << endl;
+  cout << "max = " << max(data) << endl;
+  cout << "  0th percentile = " << percentile(data, 0) << endl;
+  cout << " 25th percentile = " << percentile(data, .25) << endl;
+  cout << " 50th percentile = " << percentile(data, .50) << endl;
+  cout << " 75th percentile = " << percentile(data, .75) << endl;
+  cout << "100th percentile = " << percentile(data, 1) << endl;
 }
 
 //REQUIRES: Nothing
